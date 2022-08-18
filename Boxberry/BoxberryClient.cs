@@ -1,7 +1,6 @@
-﻿
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
-namespace BoxberryClient
+namespace BoxberryClient.Boxberry
 {
     public class BoxberryClient : IBoxberryClient
     {
@@ -51,7 +50,7 @@ namespace BoxberryClient
                 var requestMessage = CreateRequest(boxberrySettings, "method=ParselCheck&ImId=" + trackingNumber);
                 var response = _client.Send(requestMessage);
                 var result = response.Content.ReadAsStringAsync().Result;
-                var urlDocument = (JObject.Parse(result))["label"]?.Value<string>() ?? string.Empty;
+                var urlDocument = JObject.Parse(result)["label"]?.Value<string>() ?? string.Empty;
 
                 if (urlDocument.IsEmpty()) return default;
 
